@@ -55,6 +55,18 @@ class Iqons {
         return `data:image/svg+xml;base64,${btoa(this.placeholder(color, strokeWidth))}`;
     }
 
+    /**
+     * @param {string} text
+     * @returns {Promise<HTMLImageElement>}
+     */
+    static async image(text) {
+        const dataUrl = await this.toDataUrl(text);
+        const image = await this._loadImage(dataUrl);
+        image.style.width = '100%';
+        image.style.height = '100%';
+        return image;
+    }
+
     /* Private API */
 
     /**
@@ -142,23 +154,39 @@ class Iqons {
     }
 
     /**
+     * @param {string} dataUrl
+     * @returns {Promise<HTMLImageElement>}
+     */
+    static _loadImage(dataUrl) {
+        return new Promise(resolve => {
+            const img = new Image();
+            img.addEventListener('load', () => resolve(img), { once: true });
+            img.src = dataUrl;
+        });
+    }
+
+    /**
      * @returns {Promise<Document>}
      */
     static async _getAssets() {
-        /** @type {Promise<Document>} */
-        this._assetPromise = this._assetPromise || fetch(this.svgPath)
+        // eslint-disable-next-line no-return-assign
+        return this._assetsPromise || (this._assetsPromise = fetch(window.NIMIQ_IQONS_SVG_PATH || Iqons.SVG_PATH)
             .then(response => response.text())
             .then(assetsText => {
                 const parser = new DOMParser();
-                const assets = parser.parseFromString(assetsText, 'image/svg+xml');
-                this._assets = assets;
-                return assets;
-            });
-        return this._assetPromise;
+                return parser.parseFromString(assetsText, 'image/svg+xml');
+            })
+        );
     }
 
-    static get hasAssets() {
-        return !!this._assets;
+    /**
+     * @returns {boolean}
+     */
+    static hasAssets() {
+        if (!this._assetsPromise) return false;
+        let hasReturned = false;
+        this._assetsPromise.then(() => { hasReturned = true; });
+        return hasReturned;
     }
 
     /** @type {string[]} */
@@ -252,7 +280,8 @@ class Iqons {
     }
 }
 
-Iqons.svgPath = '../../assets/Iqons.min.svg';
+// @ts-ignore
+Iqons.SVG_PATH = '/assets/Iqons.min.svg';
 
 Iqons.CATALOG = {
     face: [
