@@ -1,7 +1,6 @@
 /* global I18n */
 /* global TopLevelApi */
 /* global LayoutStandard */
-/* global LayoutCheckout */
 /* global Errors */
 
 class SignTransactionApi extends TopLevelApi {
@@ -9,11 +8,10 @@ class SignTransactionApi extends TopLevelApi {
      * @param {KeyguardRequest.SignTransactionRequest} request
      */
     async onRequest(request) {
+        TopLevelApi.setLoading(true);
         const parsedRequest = await this.parseRequest(request);
-        const $layoutContainer = document.getElementById('layout-container');
 
         const handler = new SignTransactionApi.Layouts[parsedRequest.layout](
-            $layoutContainer,
             parsedRequest,
             this.resolve.bind(this),
             this.reject.bind(this),
@@ -34,6 +32,7 @@ class SignTransactionApi extends TopLevelApi {
         $cancelLink.addEventListener('click', () => this.reject(new Errors.RequestCanceled()));
 
         handler.run();
+        TopLevelApi.setLoading(false);
     }
 
     /**
@@ -71,17 +70,22 @@ class SignTransactionApi extends TopLevelApi {
         parsedRequest.layout = this.parseLayout(request.layout);
         if (parsedRequest.layout === 'checkout') {
             parsedRequest.shopOrigin = this.parseShopOrigin(request.shopOrigin);
+            parsedRequest.shopLogoUrl = this.parseShopLogoUrl(request.shopLogoUrl);
+            if (parsedRequest.shopLogoUrl.origin !== parsedRequest.shopOrigin) {
+                throw new Errors.InvalidRequestError('origins of shopLogoUrl must be same as referer');
+            }
         } else {
             parsedRequest.shopOrigin = undefined;
         }
+        parsedRequest.accountBalance = this.parseNumber(request.accountBalance);
 
         return parsedRequest;
     }
 }
 
-/** @type {{[layout: string]: any, standard: typeof LayoutStandard, checkout: typeof LayoutCheckout}} */
+/** @type {{[layout: string]: any, standard: typeof LayoutStandard, checkout: typeof LayoutStandard}} */
 SignTransactionApi.Layouts = {
     standard: LayoutStandard,
-    checkout: LayoutCheckout,
-    // 'cashlink': LayoutCashlink,
+    checkout: LayoutStandard,
+    // cashlink: LayoutCashlink,
 };

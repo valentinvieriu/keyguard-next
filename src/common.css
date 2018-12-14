@@ -57,6 +57,7 @@
     left: 4.5rem;
     top: 4.5rem;
     cursor: pointer;
+    opacity: 0.3;
 }
 
 @media (max-width: 450px) {
@@ -156,6 +157,8 @@
 }
 
 .global-close {
+    position: relative;
+    z-index: 3;
     margin-top: 8rem;
     margin-bottom: 5rem;
 }

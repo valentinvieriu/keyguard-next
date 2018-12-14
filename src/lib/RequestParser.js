@@ -192,4 +192,31 @@ class RequestParser { // eslint-disable-line no-unused-vars
             throw new Errors.InvalidRequestError(`Invalid url: ${error.message}`);
         }
     }
+
+    /**
+     * @param {any} url
+     * @returns {URL}
+     */
+    parseShopLogoUrl(url) {
+        if (!url || typeof url !== 'string') {
+            throw new Errors.InvalidRequestError('shopOrigin must be of type string');
+        }
+        try {
+            const parsedUrl = new URL(url);
+            return parsedUrl;
+        } catch (error) {
+            throw new Errors.InvalidRequestError(`Invalid url: ${error.message}`);
+        }
+    }
+
+    /**
+     *
+     * @param {any} value
+     * @returns {number | undefined}
+     */
+    parseNumber(value) {
+        if (!value) return undefined;
+        if (typeof value !== 'number') return undefined;
+        return value;
+    }
 }

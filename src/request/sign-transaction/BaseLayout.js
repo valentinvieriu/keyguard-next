@@ -11,50 +11,68 @@ class BaseLayout {
      * @param {KeyguardRequest.ParsedSignTransactionRequest} request
      * @param {Function} resolve
      * @param {Function} reject
+     * @param {HTMLElement} $recipient
      */
-    constructor(request, resolve, reject) {
-        /** @type {HTMLDivElement} */
-        const $pageBody = (document.querySelector('#confirm-transaction .transaction'));
+    constructor(request, resolve, reject, $recipient) {
+        /** @type {HTMLElement} */
+        this.$el = (document.getElementById('layout-container'));
+        this.$el.classList.add(request.layout);
 
-        /** @type {HTMLDivElement} */
-        const $senderIdenticon = ($pageBody.querySelector('#sender-identicon'));
-        /** @type {HTMLDivElement} */
-        const $recipientIdenticon = ($pageBody.querySelector('#recipient-identicon'));
+        /** @type {HTMLElement} */
+        const $recipientNode = (this.$el.querySelector('.account.recipient'));
+        /** @type {HTMLElement} */
+        ($recipientNode.parentElement).replaceChild($recipient, $recipientNode);
 
-        /** @type {HTMLDivElement} */
-        const $senderLabel = ($pageBody.querySelector('#sender-label'));
-        /** @type {HTMLDivElement} */
-        const $recipientLabel = ($pageBody.querySelector('#recipient-label'));
-
-        /** @type {HTMLDivElement} */
-        const $senderAddress = ($pageBody.querySelector('#sender-address'));
-        /** @type {HTMLDivElement} */
-        const $recipientAddress = ($pageBody.querySelector('#recipient-address'));
-
-        /** @type {HTMLDivElement} */
-        const $value = ($pageBody.querySelector('#value'));
-        /** @type {HTMLDivElement} */
-        const $fee = ($pageBody.querySelector('#fee'));
-        /** @type {HTMLDivElement} */
-        const $data = ($pageBody.querySelector('#data'));
-
-        // Set sender data.
         const transaction = request.transaction;
-        const senderAddress = transaction.sender.toUserFriendlyAddress();
-        new Identicon(senderAddress, $senderIdenticon); // eslint-disable-line no-new
-        $senderAddress.textContent = senderAddress;
+
+        // sender
+        /** @type {HTMLDivElement} */
+        const $sender = (this.$el.querySelector('.sender'));
+
+        /** @type {HTMLDivElement} */
+        const $senderIdenticon = ($sender.querySelector('.identicon'));
+        // eslint-disable-next-line no-new
+        new Identicon(transaction.sender.toUserFriendlyAddress(), $senderIdenticon);
+
+        const $senderAddresses = ($sender.querySelectorAll('.address > .chunk'));
+        /** @type {string[]} */
+        const senderAddressChunks = (
+            transaction.sender
+                .toUserFriendlyAddress()
+                .replace(/[+ ]/g, '').match(/.{4}/g)
+        );
+        $senderAddresses.forEach(($el, x) => {
+            $el.textContent = senderAddressChunks[x];
+        });
+
         if (request.senderLabel) {
-            $senderLabel.classList.remove('display-none');
+            /** @type {HTMLElement} */
+            const $senderLabel = ($sender.querySelector('.label'));
             $senderLabel.textContent = request.senderLabel;
+            $senderLabel.classList.remove('display-none');
         }
 
-        // Set recipient data.
-        if ($recipientAddress) {
-            const recipientAddress = transaction.recipient.toUserFriendlyAddress();
-            new Identicon(recipientAddress, $recipientIdenticon); // eslint-disable-line no-new
-            $recipientAddress.textContent = recipientAddress;
-            $recipientLabel.textContent = request.recipientLabel || '';
+        if (request.keyLabel) {
+            /** @type {HTMLElement} */
+            const $walletLabel = ($sender.querySelector('.wallet-label'));
+            $walletLabel.textContent = request.keyLabel;
+            $walletLabel.classList.remove('display-none');
         }
+
+        if (request.accountBalance) {
+            /** @type {HTMLElement} */
+            const $balance = ($sender.querySelector('.balance'));
+            $balance.textContent = this._formatNumber(Nimiq.Policy.satoshisToCoins(request.accountBalance));
+            /** @type {HTMLElement} */
+            ($balance.parentElement).classList.remove('display-none');
+        }
+
+        /** @type {HTMLDivElement} */
+        const $value = (this.$el.querySelector('#value'));
+        /** @type {HTMLDivElement} */
+        const $fee = (this.$el.querySelector('#fee'));
+        /** @type {HTMLDivElement} */
+        const $data = (this.$el.querySelector('#data'));
 
         // Set value and fee.
         const total = transaction.value + transaction.fee;
@@ -65,16 +83,15 @@ class BaseLayout {
         if ($fee && transaction.fee > 0) {
             $fee.textContent = Nimiq.Policy.satoshisToCoins(transaction.fee).toString();
             /** @type {HTMLDivElement} */
-            const $feeSection = ($pageBody.querySelector('.fee-section'));
+            const $feeSection = (this.$el.querySelector('.fee-section'));
             $feeSection.classList.remove('display-none');
         }
 
         // Set transaction extra data.
         if ($data && transaction.data.byteLength > 0) {
-            // FIXME Detect and use proper encoding.
-            $data.textContent = Nimiq.BufferUtils.toAscii(transaction.data);
+            $data.textContent = Utf8Tools.utf8ByteArrayToString(transaction.data);
             /** @type {HTMLDivElement} */
-            const $dataSection = ($pageBody.querySelector('.data-section'));
+            const $dataSection = (this.$el.querySelector('.data-section'));
             $dataSection.classList.remove('display-none');
         }
 
@@ -85,6 +102,7 @@ class BaseLayout {
             hideInput: !request.keyInfo.encrypted,
             buttonI18nTag: 'passphrasebox-confirm-tx',
             minLength: request.keyInfo.hasPin ? 6 : undefined,
+            hideCancel: true,
         });
 
         this._passphraseBox.on(
@@ -94,10 +112,31 @@ class BaseLayout {
             },
         );
 
-        // This event cannot throw a 'CANCEL' error like in other requests,
-        // because for checkout we need to go back to the CheckoutOverview
-        // in the Accounts Manager and not return directly to the caller.
-        this._passphraseBox.on(PassphraseBox.Events.CANCEL, () => window.history.back());
+        /** @type {HTMLElement} */
+        this.$accountDetails = (this.$el.querySelector('#account-details'));
+        const $accounts = this.$el.querySelectorAll('.account');
+        $accounts.forEach($item => $item.addEventListener('click', event => this._openDetails($item, event)));
+        /** @type {HTMLButtonElement} */
+        const $closeDetails = (this.$accountDetails.querySelector('#close-details'));
+        $closeDetails.addEventListener('click', this._closeDetails.bind(this));
+        /** @type {HTMLElement} */
+        const $background = (this.$el.querySelector('#background-overlay'));
+        $background.addEventListener('click', this._closeDetails.bind(this));
+    }
+
+    /**
+     * @param {Element} $el
+     * @param {Event} event
+     */
+    _openDetails($el, event) {
+        event.preventDefault();
+        /** @type {HTMLElement} */
+        (this.$accountDetails.querySelector('#details')).innerHTML = $el.innerHTML;
+        this.$el.classList.add('open');
+    }
+
+    _closeDetails() {
+        this.$el.classList.remove('open');
     }
 
     /**
@@ -145,6 +184,8 @@ class BaseLayout {
 
         // Async pre-load the crypto worker to reduce wait time at first decrypt attempt
         Nimiq.CryptoWorker.getInstanceAsync();
+        /** @type {HTMLElement} */
+        (this.$el.parentElement).classList.remove('display-none');
     }
 
     /**

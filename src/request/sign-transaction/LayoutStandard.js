@@ -1,71 +1,88 @@
 /* global BaseLayout */
-/* global I18n */
+/* global Identicon */
 
 class LayoutStandard extends BaseLayout { // eslint-disable-line no-unused-vars
     /**
-     * @param {?HTMLElement} $el
      * @param {KeyguardRequest.ParsedSignTransactionRequest} request
      * @param {Function} resolve
      * @param {Function} reject
      */
-    constructor($el, request, resolve, reject) {
+    constructor(request, resolve, reject) {
         // `this` can only be accessed after `super` has been called,
         // but `super` requires the HTML to already exist.
-        const container = LayoutStandard._createElement($el);
-        super(request, resolve, reject);
-        this.$el = container;
+        const $recipient = LayoutStandard._createRecipient();
+
+        // set recipient data
+        /** @type {HTMLDivElement} */
+        const $recipientIdenticon = ($recipient.querySelector('.identicon'));
+        if (request.shopLogoUrl) {
+            const $shopLogo = document.createElement('img');
+            $shopLogo.src = request.shopLogoUrl.href;
+            $recipientIdenticon.classList.add('clip');
+            $recipientIdenticon.appendChild($shopLogo);
+            $shopLogo.addEventListener('error', () => {
+                $shopLogo.remove();
+                $recipientIdenticon.classList.remove('clip');
+                // eslint-disable-next-line no-new
+                new Identicon(request.transaction.recipient.toUserFriendlyAddress(), $recipientIdenticon);
+            });
+        } else {
+            // eslint-disable-next-line no-new
+            new Identicon(request.transaction.recipient.toUserFriendlyAddress(), $recipientIdenticon);
+        }
+
+        const $recipientAddresses = ($recipient.querySelectorAll('.address > .chunk'));
+        /** @type {string[]} */
+        const recipientAddressChunks = (
+            request.transaction.recipient
+                .toUserFriendlyAddress()
+                .replace(/[+ ]/g, '').match(/.{4}/g)
+        );
+        $recipientAddresses.forEach(($element, x) => {
+            $element.textContent = recipientAddressChunks[x];
+        });
+
+        /** @type {HTMLElement} */
+        const $recipientLabel = ($recipient.querySelector('.label'));
+        if (request.shopOrigin) {
+            $recipientLabel.textContent = LayoutStandard._originToDomain(request.shopOrigin);
+            $recipientLabel.classList.remove('display-none');
+        } else if (request.recipientLabel) {
+            $recipientLabel.textContent = request.recipientLabel;
+            $recipientLabel.classList.remove('display-none');
+        }
+
+        super(request, resolve, reject, $recipient);
     }
 
     /**
-     * @param {?HTMLElement} [$el]
-     * @returns {HTMLElement}
+     * @param {string} [origin]
+     * @returns {string}
      */
-    static _createElement($el) {
-        $el = $el || document.createElement('div');
-        $el.classList.add('layout-standard');
+    static _originToDomain(origin) {
+        if (!origin) return '---';
+        return origin.split('://')[1] || '---';
+    }
 
-        $el.innerHTML = `
-            <div class="page-header nq-card-header">
-                <h1 data-i18n="sign-tx-heading" class="nq-h1">New Transaction</h1>
-            </div>
-
-            <div class="page-body transaction">
-                <div class="nq-card-body">
-                    <div class="center accounts">
-                        <div class="account">
-                            <div class="identicon" id="sender-identicon"></div>
-                            <div class="label" id="sender-label"></div>
-                            <div class="address" id="sender-address"></div>
-                        </div>
-
-                        <i class="arrow nq-icon chevron-right"></i>
-
-                        <div class="account">
-                            <div class="identicon" id="recipient-identicon"></div>
-                            <div class="label" id="recipient-label"></div>
-                            <div class="address" id="recipient-address"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="nq-card-footer">
-                    <div class="total">
-                        <span id="value"></span><span class="nim-symbol"></span>
-                    </div>
-
-                    <div class="fee-section nq-text-s display-none">
-                        <span data-i18n="sign-tx-includes">includes</span>
-                        <span id="fee"></span>
-                        <span class="nim-symbol"></span>
-                        <span data-i18n="sign-tx-fee">fee</span>
-                    </div>
-
-                    <div class="data-section nq-text display-none" id="data"></div>
-                </div>
+    static _createRecipient() {
+        const $recipient = document.createElement('a');
+        $recipient.classList.add('account', 'recipient');
+        $recipient.href = '#';
+        $recipient.innerHTML = `
+            <div class="identicon"></div>
+            <div class="label display-none"></div>
+            <div class="address">
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
+                <span class="chunk"></span><span class="space">&nbsp;</span>
             </div>
         `;
-
-        I18n.translateDom($el);
-        return $el;
+        return $recipient;
     }
 }
