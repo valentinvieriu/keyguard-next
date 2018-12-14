@@ -49,7 +49,7 @@ class RecoveryWords extends Nimiq.Observable {
      * */
     _createElement($el, input = true) {
         $el = $el || document.createElement('div');
-        $el.classList.add('recovery-words', 'nq-bg-light-blue');
+        $el.classList.add('recovery-words', 'nq-light-blue-bg');
 
         $el.innerHTML = `
             <div class="words-container">

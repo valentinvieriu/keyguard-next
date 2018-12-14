@@ -46,8 +46,8 @@ class DownloadKeyfile extends Nimiq.Observable {
     setSecret(secret, isProtected) { // eslint-disable-line no-unused-vars
         // TODO Generate file from secret
 
-        this.$el.classList.toggle('nq-bg-orange', !isProtected);
-        this.$el.classList.toggle('nq-bg-green', isProtected);
+        this.$el.classList.toggle('nq-orange-bg', !isProtected);
+        this.$el.classList.toggle('nq-green-bg', isProtected);
         this.$downloadButtons.forEach(el => {
             el.classList.toggle('orange', !isProtected);
             el.classList.toggle('green', isProtected);
