@@ -49,6 +49,9 @@
     visibility: hidden;
     margin: 0;
 }
+.passphrase-box.hide-input .prompt {
+    visibility: hidden;
+}
 
 .passphrase-box .submit {
     margin-top: -8rem;
