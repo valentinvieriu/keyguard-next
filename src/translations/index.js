@@ -120,8 +120,8 @@ const TRANSLATIONS = {
         'derive-address-text-select-avatar': 'Select an avatar for your new Address from the selection below.',
 
         'change-passphrase-heading': 'Change your password',
-        'change-paragraph': 'Before entering your new passphrase, you must first unlock your Account.',
-        'change-set-paragraph': 'Now please enter your new Passphrase and repeat it for confirmation.',
+        'change-paragraph': 'Before entering your new password, you must first unlock your Account.',
+        'change-set-paragraph': 'Now please enter your new password and repeat it for confirmation.',
     },
     de: {
         _language: 'Deutsch',
