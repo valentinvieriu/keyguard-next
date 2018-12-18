@@ -68,9 +68,15 @@ class RecoveryWords extends Nimiq.Observable {
                 content.title = `word #${i + 1}`;
                 this.$fields.push(content);
 
+                const counter = document.createElement('span');
+                counter.classList.add('word-count');
+                counter.title = `word #${i + 1}`;
+                counter.innerText = `${i <= 9 ? '0' : ''}${i}`;
+
                 const word = document.createElement('div');
-                word.classList.add('word');
+                word.classList.add('word', 'bg');
                 word.classList.add('recovery-words-input-field');
+                word.appendChild(counter);
                 word.appendChild(content);
                 wordSection.appendChild(word);
             }

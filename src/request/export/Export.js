@@ -53,7 +53,7 @@ class Export {
     }
 
     run() {
-        this._exportFileHandler.run();
+        this._exportWordsHandler.run();
     }
 
     /**
@@ -75,6 +75,8 @@ class Export {
      * @param { {success:boolean} } result
      */
     _wordsSucceeded(result) {
+        this._resolve(result);
+/*
         if (this.exported.file) {
             this._resolve(result);
         } else {
@@ -82,6 +84,7 @@ class Export {
             this.$wordsButton.classList.add('display-none');
             window.location.hash = Export.Pages.MORE_EXPORT_OPTIONS;
         }
+*/
     }
 
     _buildMoreExportOptions() {
