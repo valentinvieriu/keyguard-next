@@ -61,6 +61,10 @@
     display: none;
 }
 
+#show-download-key-file {
+    display: none;
+}
+
 .page-footer {
     padding: 1rem;
 }

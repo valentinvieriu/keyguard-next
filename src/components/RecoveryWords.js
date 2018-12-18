@@ -35,28 +35,17 @@ class RecoveryWords extends Nimiq.Observable {
     }
 
     /**
-     * @param {Nimiq.Entropy | Uint8Array} entropy
-     */
-    set entropy(entropy) {
-        const words = Nimiq.MnemonicUtils.entropyToMnemonic(entropy, Nimiq.MnemonicUtils.DEFAULT_WORDLIST);
-        this.setWords(words);
-    }
-
-    /**
      * @param {HTMLElement} [$el]
      * @param {boolean} input
      * @returns {HTMLElement}
      * */
     _createElement($el, input = true) {
         $el = $el || document.createElement('div');
-        $el.classList.add('recovery-words', 'nq-light-blue-bg');
+        $el.classList.add('recovery-words');
 
         $el.innerHTML = `
             <div class="words-container">
-                <div class="title-wrapper">
-                    <div class="title" data-i18n="recovery-words-title">Recovery Words</div>
-                </div>
-                <div class="word-section"> </div>
+                <div class="word-section"></div>
             </div>
         `;
 
@@ -79,9 +68,15 @@ class RecoveryWords extends Nimiq.Observable {
                 content.title = `word #${i + 1}`;
                 this.$fields.push(content);
 
+                const counter = document.createElement('span');
+                counter.classList.add('word-count');
+                counter.title = `word #${i + 1}`;
+                counter.innerText = `${i <= 9 ? '0' : ''}${i}`;
+
                 const word = document.createElement('div');
-                word.classList.add('word');
+                word.classList.add('word', 'bg');
                 word.classList.add('recovery-words-input-field');
+                word.appendChild(counter);
                 word.appendChild(content);
                 wordSection.appendChild(word);
             }

@@ -192,11 +192,12 @@ class ExportWords extends Nimiq.Observable {
         </div>
 
         <div class="page-body nq-card-body">
+            <p class="nq-text nq-orange">Anyone with these words can access your wallet! Keep them save.</p>
             <div class="recovery-words"></div>
         </div>
 
         <div class="page-footer">
-            <button class="to-validate-words nq-button" data-i18n="continue">Continue</button>
+            <button class="to-validate-words nq-button inverse" data-i18n="continue">Continue</button>
         </div>
         `;
         /** @type {HTMLElement} */

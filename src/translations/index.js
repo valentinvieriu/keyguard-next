@@ -102,25 +102,25 @@ const TRANSLATIONS = {
         'export-more-options-heading': 'More export options',
 
         'remove-key-log-out': 'Log out',
-        'remove-key-intro-text': 'Logging out means removing your Wallet File from this browser. '
-                               + 'Make sure you have it stored somewhere, or at least have your '
+        'remove-key-intro-text': 'Logging out means removing your Account from this browser. '
+                               + 'Make sure you have your '
                                + 'Recovery Words accessible.',
-        'remove-key-intro-text-red': 'If you have neither of them, there’s no chance to regain '
-                                   + 'access to your wallet.',
+        'remove-key-intro-text-red': 'If you do not have them, there’s no chance to regain '
+                                   + 'access to your Account.',
         'remove-key-key-file': 'Wallet File',
         'remove-key-download-key-file': 'Download Wallet File',
         'remove-key-show-recovery-words': 'Show Recovery Words',
-        'remove-key-confirm': 'Log out of your wallet',
+        'remove-key-confirm': 'Log out of your Account',
         'remove-key-recovery-words': 'Recovery Words',
         'remove-key-back': 'Back to logout',
 
-        'derive-address-heading-passphrase': 'Unlock your wallet',
-        'derive-address-passphrase-text': 'Please enter your passphrase to add another account to your wallet.',
-        'derive-address-heading-choose-identicon': 'Choose your account avatar',
-        'derive-address-text-select-avatar': 'Select an avatar for your new account from the selection below.',
+        'derive-address-heading-passphrase': 'Unlock your Account',
+        'derive-address-passphrase-text': 'Please enter your password to add another Address to your Account.',
+        'derive-address-heading-choose-identicon': 'Choose your Address avatar',
+        'derive-address-text-select-avatar': 'Select an avatar for your new Address from the selection below.',
 
-        'change-passphrase-heading': 'Change your passphrase',
-        'change-paragraph': 'Before entering your new passphrase, you must first unlock your wallet.',
+        'change-passphrase-heading': 'Change your password',
+        'change-paragraph': 'Before entering your new passphrase, you must first unlock your Account.',
         'change-set-paragraph': 'Now please enter your new Passphrase and repeat it for confirmation.',
     },
     de: {

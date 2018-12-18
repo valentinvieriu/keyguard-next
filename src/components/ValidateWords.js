@@ -47,15 +47,15 @@ class ValidateWords extends Nimiq.Observable {
             <p data-i18n="validate-words-text" class="nq-text">Please select the correct word from your list of recovery words.</p>
             <div class="target-index"></div>
             <div class="word-list">
-                <button class="nq-button"></button>
-                <button class="nq-button"></button>
-                <button class="nq-button"></button>
-                <button class="nq-button"></button>
-                <button class="nq-button"></button>
-                <button class="nq-button"></button>
+                <button class="nq-button inverse"></button>
+                <button class="nq-button inverse"></button>
+                <button class="nq-button inverse"></button>
+                <button class="nq-button inverse"></button>
+                <button class="nq-button inverse"></button>
+                <button class="nq-button inverse"></button>
             </div>
             <div class="back-to-words-container">
-                <a tabindex="0" data-i18n="validate-words-back" class="back-to-words nq-label nq-link">Back to words</a>
+                <a tabindex="0" data-i18n="validate-words-back" class="back-to-words nq-label">Back to words</a>
             </div>
             <div class="skip-container">
                 <a tabindex="0" data-i18n="validate-words-skip" class="skip nq-text-s nq-link">Skip validation for now</a>
@@ -124,8 +124,14 @@ class ValidateWords extends Nimiq.Observable {
      * @private
      */
     _setContent(round) {
-        this.$el.querySelectorAll('.green').forEach(button => button.classList.remove('green'));
-        this.$el.querySelectorAll('.red').forEach(button => button.classList.remove('red'));
+        this.$el.querySelectorAll('.green').forEach(button => {
+            button.classList.add('inverse')
+            button.classList.remove('green');
+        });
+        this.$el.querySelectorAll('.red').forEach(button => {
+            button.classList.add('inverse')
+            button.classList.remove('red');
+        });
         const wordList = this._generateWords(this._requiredWords[round]);
         this._setWordList(wordList);
         const targetIndex = this._requiredWords[round] + 1;
@@ -207,6 +213,7 @@ class ValidateWords extends Nimiq.Observable {
      * @private
      */
     static _showAsWrong($button) {
+        $button.classList.remove('inverse')
         $button.classList.add('red');
     }
 
@@ -215,6 +222,7 @@ class ValidateWords extends Nimiq.Observable {
      * @private
      */
     static _showAsCorrect($button) {
+        $button.classList.remove('inverse')
         $button.classList.add('green');
     }
 }

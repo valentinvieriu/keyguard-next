@@ -115,12 +115,12 @@ class ChangePassphrase {
         $el.classList.add('page', 'nq-card');
         $el.innerHTML = `
             <div class="page-header nq-card-header">
-                <h1 data-i18n="change-passphrase-heading" class="nq-h1">Change your passphrase</h1>
+                <h1 data-i18n="change-passphrase-heading" class="nq-h1">Change your password</h1>
             </div>
 
             <div class="page-body nq-card-body">
                 <p data-i18n="change-paragraph" class="nq-text">
-                    Before entering your new passphrase, you must first unlock your wallet.
+                    Before entering your new passphrase, you must first unlock your Account.
                 </p>
             </div>
 
@@ -141,7 +141,7 @@ class ChangePassphrase {
         $el.innerHTML = `
             <div class="page-header nq-card-header">
                 <a tabindex="0" class="page-header-back-button nq-icon arrow-left"></a>
-                <h1 data-i18n="change-passphrase-heading" class="nq-h1">Change your passphrase</h1>
+                <h1 data-i18n="change-passphrase-heading" class="nq-h1">Change your password</h1>
             </div>
 
             <div class="page-body nq-card-body">
