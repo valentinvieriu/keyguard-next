@@ -76,7 +76,7 @@ class Export {
      */
     _wordsSucceeded(result) {
         this._resolve(result);
-/*
+        /*
         if (this.exported.file) {
             this._resolve(result);
         } else {
