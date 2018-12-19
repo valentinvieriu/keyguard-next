@@ -118,13 +118,13 @@ class RemoveKey {
         <div class="page-body nq-card-body">
             <div class="row">
                 <p data-i18n="remove-key-intro-text" class="nq-text">
-                    Logging out means removing your Account from this browser.
+                    Logging out means removing your account from this browser.
                     Make sure you have your Recovery Words accessible.
                 </p>
                 <div class="nq-icon warning-sign"></div>
             </div>
             <p class="nq-text nq-red" data-i18n="remove-key-intro-text-red">
-                If you do not have them, there’s no chance to regain access to your Account.
+                If you do not have them, there’s no chance to regain access to your account.
             </p>
             <div class="flex-grow"></div>
             <div class="row hide-for-passphrase">
@@ -140,7 +140,7 @@ class RemoveKey {
         <div class="page-footer nq-card-footer">
             <form class="passphrase-box"></form>
             <button id="remove-key-confirm" class="hide-for-passphrase nq-button red" data-i18n="remove-key-confirm">
-                Log out of your Account
+                Log out of your account
             </button>
         </div>
         `;

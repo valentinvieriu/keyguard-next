@@ -26,7 +26,7 @@ const TRANSLATIONS = {
         'create-heading-create-password': 'Create a password',
         'create-heading-repeat-password': 'Confirm your password',
         'create-heading-validate-backup': 'Validate your backup',
-        'create-wallet-desc': 'This is your Account with your first Address in it.',
+        'create-wallet-desc': 'This is your account with your first address in it.',
 
         'import-heading-log-in': 'Log in',
         'import-link-no-wallet': 'Don\'t have a wallet yet?',
@@ -62,7 +62,7 @@ const TRANSLATIONS = {
         'sign-tx-cancel-payment': 'Cancel payment',
 
         'sign-msg-heading': 'Sign Message',
-        'sign-msg-text': 'Please enter your passphrase to sign the following message:',
+        'sign-msg-text': 'Please enter your password to sign the following message:',
         'sign-msg-sign-with': 'Sign with',
 
         'passphrasebox-enter-passphrase': 'Enter your password',
@@ -102,25 +102,25 @@ const TRANSLATIONS = {
         'export-more-options-heading': 'More export options',
 
         'remove-key-log-out': 'Log out',
-        'remove-key-intro-text': 'Logging out means removing your Account from this browser. '
+        'remove-key-intro-text': 'Logging out means removing your account from this browser. '
                                + 'Make sure you have your '
                                + 'Recovery Words accessible.',
         'remove-key-intro-text-red': 'If you do not have them, there’s no chance to regain '
-                                   + 'access to your Account.',
+                                   + 'access to your account.',
         'remove-key-key-file': 'Wallet File',
         'remove-key-download-key-file': 'Download Wallet File',
         'remove-key-show-recovery-words': 'Show Recovery Words',
-        'remove-key-confirm': 'Log out of your Account',
+        'remove-key-confirm': 'Log out of your account',
         'remove-key-recovery-words': 'Recovery Words',
         'remove-key-back': 'Back to logout',
 
-        'derive-address-heading-passphrase': 'Unlock your Account',
-        'derive-address-passphrase-text': 'Please enter your password to add another Address to your Account.',
-        'derive-address-heading-choose-identicon': 'Choose your Address avatar',
-        'derive-address-text-select-avatar': 'Select an avatar for your new Address from the selection below.',
+        'derive-address-heading-passphrase': 'Unlock your account',
+        'derive-address-passphrase-text': 'Please enter your password to add another address to your account.',
+        'derive-address-heading-choose-identicon': 'Choose your address avatar',
+        'derive-address-text-select-avatar': 'Select an avatar for your new address from the selection below.',
 
         'change-passphrase-heading': 'Change your password',
-        'change-paragraph': 'Before entering your new password, you must first unlock your Account.',
+        'change-paragraph': 'Before entering your new password, you must first unlock your account.',
         'change-set-paragraph': 'Now please enter your new password and repeat it for confirmation.',
     },
     de: {
@@ -153,12 +153,12 @@ const TRANSLATIONS = {
         'create-heading-create-password': 'Erstelle ein Passwort',
         'create-heading-repeat-password': 'Bestätige dein Passwort',
         'create-heading-validate-backup': 'Überprüfe dein Backup',
-        'create-wallet-desc': 'Das ist dein Wallet mit deinem ersten Account.',
+        'create-wallet-desc': 'Das ist dein Account mit deiner ersten Adresse.',
 
         'import-heading-log-in': 'Einloggen',
-        'import-link-no-wallet': 'Du hast noch keine Wallet?',
-        'import-heading-protect': 'Wallet verschlüsseln',
-        'import-text-set-password': 'Du kannst jetzt ein Passwort eingeben, um deine Wallet auf diesem '
+        'import-link-no-wallet': 'Du hast noch keinen Account?',
+        'import-heading-protect': 'Account verschlüsseln',
+        'import-text-set-password': 'Du kannst jetzt ein Passwort eingeben, um deinen Account auf diesem '
                                   + 'Gerät zu verschlüsseln.',
 
         'import-file-lost-file': 'Schlüsseldatei verloren? Du kannst deinen Account mit deinen 24 '
@@ -192,14 +192,14 @@ const TRANSLATIONS = {
         'sign-tx-cancel-payment': 'Zahlung abbrechen',
 
         'sign-msg-heading': 'Nachricht signieren',
-        'sign-msg-text': 'Bitte gib deine Passphrase ein, um die folgende Nachricht zu signieren:',
+        'sign-msg-text': 'Bitte gib dein Passwort ein, um die folgende Nachricht zu signieren:',
         'sign-msg-sign-with': 'Signieren mit',
 
         'passphrasebox-enter-passphrase': 'Gib dein Passwort ein',
         'passphrasebox-protect-keyfile': 'Sichere dein KeyFile mit einem Passwort',
         'passphrasebox-repeat-password': 'Wiederhole dein Passwort',
         'passphrasebox-continue': 'Weiter',
-        'passphrasebox-log-in': 'In deine Wallet einloggen',
+        'passphrasebox-log-in': 'In deinen Account einloggen',
         'passphrasebox-log-out': 'Abmeldung bestätigen',
         'passphrasebox-download': 'Schlüsseldatei herunterladen',
         'passphrasebox-confirm-tx': 'Überweisung bestätigen',
@@ -237,22 +237,22 @@ const TRANSLATIONS = {
                                + 'Stelle sicher, dass du sie an einem sicheren Ort verwahrt hast, '
                                + 'oder zumindest deine Wiederherstellungswörter für dich zugänglich sind.',
         'remove-key-intro-text-red': 'Falls du zu beiden keinen Zugang hast besteht keine Möglichkeit wieder '
-                                   + 'Zugriff auf dein Wallet zu erhalten.',
+                                   + 'Zugriff auf deinen Account zu erhalten.',
         'remove-key-key-file': 'Schlüsseldatei',
         'remove-key-download-key-file': 'Schlüsseldatei herunterladen',
         'remove-key-show-recovery-words': 'Wiederherstellungswörter anzeigen',
-        'remove-key-confirm': 'Aus deinem Wallet ausloggen',
+        'remove-key-confirm': 'Aus deinem Account ausloggen',
         'remove-key-recovery-words': 'Wiederherstellungswörter',
         'remove-key-back': 'Zurück zum logout',
 
-        'derive-address-heading-passphrase': 'Entschlüssele dein Wallet',
-        'derive-address-passphrase-text': 'Bitte gib deine Passphrase ein um deiner Wallet einen weiteren Account '
+        'derive-address-heading-passphrase': 'Entschlüssele deinen Account',
+        'derive-address-passphrase-text': 'Bitte gib dein Passwort ein um deinem Account eine weitere Adresse '
                                         + 'hinzuzufügen.',
         'derive-address-heading-choose-identicon': 'Wähle deinen Konto-Avatar',
-        'derive-address-text-select-avatar': 'Wähle einen Avatar für deinen neuen Account aus der Auswahl unten.',
+        'derive-address-text-select-avatar': 'Wähle einen Avatar für deine neue Adresse aus der Auswahl unten.',
 
         'change-passphrase-heading': 'Ändere dein Passwort',
-        'change-paragraph': 'Um dein Passwort zu ändern musst du vorher dein Wallet entschlüsseln.',
+        'change-paragraph': 'Um dein Passwort zu ändern musst du vorher dein Account entschlüsseln.',
         'change-set-paragraph': 'Gib jetzt dein neues Passwort ein und wiederhole es danach um es zu bestätigen.',
     },
 };

@@ -35,7 +35,7 @@ class DeriveAddressApi extends TopLevelApi { // eslint-disable-line no-unused-va
         parsedRequest.appName = this.parseAppName(request.appName);
         parsedRequest.keyInfo = await this.parseKeyId(request.keyId);
         if (parsedRequest.keyInfo.type === Key.Type.LEGACY) {
-            throw new Errors.InvalidRequestError('Cannot derive addresses for single-account wallets');
+            throw new Errors.InvalidRequestError('Cannot derive addresses for single-address wallets');
         }
         parsedRequest.keyLabel = this.parseLabel(request.keyLabel);
         parsedRequest.baseKeyPath = this.parsePath(request.baseKeyPath, 'baseKeyPath');

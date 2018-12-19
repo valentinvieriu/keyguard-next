@@ -120,7 +120,7 @@ class ChangePassphrase {
 
             <div class="page-body nq-card-body">
                 <p data-i18n="change-paragraph" class="nq-text">
-                    Before entering your new password, you must first unlock your Account.
+                    Before entering your new password, you must first unlock your account.
                 </p>
             </div>
 

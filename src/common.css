@@ -55,7 +55,7 @@
     height: 3rem;
     position: absolute;
     left: 4.5rem;
-    top: 4.5rem;
+    top: 4rem;
     cursor: pointer;
     transition: opacity .3s ease, transform .4s ease, -webkit-transform .4s ease;
 }
