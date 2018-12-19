@@ -4,6 +4,9 @@
 
 #layout-container {
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 #layout-container.standard .hide-standard,
@@ -47,6 +50,9 @@
 #layout-container #effect-container {
     overflow: hidden;
     border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 #layout-container > #effect-container > * {
