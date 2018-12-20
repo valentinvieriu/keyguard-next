@@ -3,7 +3,7 @@
 
 class LayoutStandard extends BaseLayout { // eslint-disable-line no-unused-vars
     /**
-     * @param {KeyguardRequest.ParsedSignTransactionRequest} request
+     * @param {ParsedSignTransactionRequest} request
      * @param {Function} resolve
      * @param {Function} reject
      */
