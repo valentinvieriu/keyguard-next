@@ -5,8 +5,10 @@ class KeyInfo {
      * @param {Key.Type} type
      * @param {boolean} encrypted
      * @param {boolean} hasPin
+     * @param {boolean} hasFile
+     * @param {boolean} hasWords
      */
-    constructor(id, type, encrypted, hasPin) {
+    constructor(id, type, encrypted, hasPin, hasFile, hasWords) {
         /** @private */
         this._id = id;
         /** @private */
@@ -15,6 +17,10 @@ class KeyInfo {
         this._encrypted = encrypted;
         /** @private */
         this._hasPin = hasPin;
+        /** @private */
+        this._hasFile = hasFile;
+        /** @private */
+        this._hasWords = hasWords;
     }
 
     /**
@@ -46,22 +52,38 @@ class KeyInfo {
     }
 
     /**
+     * @type {boolean}
+     */
+    get hasFile() {
+        return this._hasFile;
+    }
+
+    /**
+     * @type {boolean}
+     */
+    get hasWords() {
+        return this._hasWords;
+    }
+
+    /**
      * @returns {KeyguardRequest.KeyInfoObject}
      */
     toObject() {
         return {
             id: this.id,
             type: this.type,
-            encrypted: this.encrypted,
             hasPin: this.hasPin,
+            hasFile: this.hasFile,
+            hasWords: this.hasWords,
         };
     }
 
     /**
      * @param {KeyguardRequest.KeyInfoObject} obj
+     * @param {boolean} encrypted
      * @returns {KeyInfo}
      */
-    static fromObject(obj) {
-        return new KeyInfo(obj.id, obj.type, obj.encrypted, obj.hasPin);
+    static fromObject(obj, encrypted) {
+        return new KeyInfo(obj.id, obj.type, encrypted, obj.hasPin, obj.hasFile, obj.hasWords);
     }
 }

@@ -84,12 +84,24 @@ describe('KeyStore', () => {
 
         // add an encrypted key
         const passphrase = Nimiq.BufferUtils.fromAscii(Dummy.encryptionPassword);
-        await KeyStore.instance.put(new Key(Dummy.keys[0], Key.Type.LEGACY), passphrase);
+        await KeyStore.instance.put(new Key(
+            Dummy.keys[0],
+            Key.Type.LEGACY,
+            Dummy.keyInfos[0].hasPin,
+            Dummy.keyInfos[0].hasFile,
+            Dummy.keyInfos[0].hasWords,
+        ), passphrase);
         currentKeys = await KeyStore.instance.list();
         expect(currentKeys.length).toBe(1);
 
         // add a plain key
-        await KeyStore.instance.put(new Key(Dummy.keys[1], Key.Type.BIP39));
+        await KeyStore.instance.put(new Key(
+            Dummy.keys[1],
+            Key.Type.BIP39,
+            Dummy.keyInfos[1].hasPin,
+            Dummy.keyInfos[1].hasFile,
+            Dummy.keyInfos[1].hasWords,
+        ));
         currentKeys = await KeyStore.instance.list();
         expect(currentKeys).toEqual(Dummy.keyInfos);
 

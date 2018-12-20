@@ -81,7 +81,7 @@ class KeyStore {
     async getInfo(id) {
         /** @type {?KeyRecord} */
         const keyRecord = await this._get(id);
-        return keyRecord ? KeyInfo.fromObject(keyRecord) : null;
+        return keyRecord ? KeyInfo.fromObject(keyRecord, keyRecord.encrypted) : null;
     }
 
     /**
@@ -111,6 +111,8 @@ class KeyStore {
             type: key.type,
             encrypted: !!passphrase && passphrase.length > 0,
             hasPin: key.hasPin,
+            hasFile: key.hasFile,
+            hasWords: key.hasWords,
             secret,
         };
 
@@ -149,7 +151,7 @@ class KeyStore {
             .openCursor();
 
         const results = /** KeyRecord[] */ await KeyStore._readAllFromCursor(request);
-        return results.map(keyRecord => KeyInfo.fromObject(keyRecord));
+        return results.map(keyRecord => KeyInfo.fromObject(keyRecord, keyRecord.encrypted));
     }
 
     /**
@@ -205,8 +207,9 @@ class KeyStore {
             const keyObject = {
                 id: legacyKeyId,
                 type: Key.Type.LEGACY,
-                encrypted: true,
                 hasPin: account.type === 'low',
+                hasFile: false,
+                hasWords: account.type !== 'low',
             };
 
             if (withAccount) {
@@ -224,6 +227,7 @@ class KeyStore {
             if (/** @type {AccountRecord} */ (account).encryptedKeyPair) {
                 /** @type {KeyRecord} */
                 const keyRecord = Object.assign({}, keyObject, {
+                    encrypted: true,
                     secret: /** @type {AccountRecord} */ (account).encryptedKeyPair,
                 });
                 return keyRecord;

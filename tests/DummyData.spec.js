@@ -8,6 +8,7 @@ beforeAll(async () => {
     await loadNimiq();
 });
 
+/** @type {{[key: string]: any}} */
 const Dummy = {};
 
 Dummy.keys = [
@@ -35,12 +36,36 @@ Dummy.keyInfos = [
         Key.Type.LEGACY,
         true,
         false,
+        false,
+        true
     ),
     new KeyInfo(
         'ef553f34a779',
         Key.Type.BIP39,
         false,
         false,
+        true,
+        false
+    ),
+];
+
+/** @type {KeyInfo[]} */
+Dummy.cookieKeyInfos = [
+    new KeyInfo(
+        '2ec615522906',
+        Key.Type.LEGACY,
+        true,
+        false,
+        false,
+        true
+    ),
+    new KeyInfo(
+        'ef553f34a779',
+        Key.Type.BIP39,
+        true,
+        false,
+        true,
+        false
     ),
 ];
 
@@ -49,21 +74,23 @@ Dummy.keyInfoObjects = [
     {
         id: Dummy.keyInfos[0].id,
         type: Dummy.keyInfos[0].type,
-        encrypted: Dummy.keyInfos[0].encrypted,
         hasPin: Dummy.keyInfos[0].hasPin,
+        hasFile: Dummy.keyInfos[0].hasFile,
+        hasWords: Dummy.keyInfos[0].hasWords,
     },
     {
         id: Dummy.keyInfos[1].id,
         type: Dummy.keyInfos[1].type,
-        encrypted: Dummy.keyInfos[1].encrypted,
         hasPin: Dummy.keyInfos[1].hasPin,
+        hasFile: Dummy.keyInfos[1].hasFile,
+        hasWords: Dummy.keyInfos[1].hasWords,
     },
 ];
 
 /** @type {KeyRecord[]} */
 Dummy.keyRecords = [
-    Object.assign({}, Dummy.keyInfoObjects[0], { secret: Dummy.encryptedKeys[0] }),
-    Object.assign({}, Dummy.keyInfoObjects[1], { secret: Dummy.keys[1] }),
+    Object.assign({}, Dummy.keyInfoObjects[0], { encrypted: Dummy.keyInfos[0].encrypted, secret: Dummy.encryptedKeys[0] }),
+    Object.assign({}, Dummy.keyInfoObjects[1], { encrypted: Dummy.keyInfos[1].encrypted, secret: Dummy.keys[1] }),
 ];
 
 /** @type {AccountInfo[]} */
@@ -84,15 +111,16 @@ Dummy.deprecatedAccountRecords = [
 Dummy.deprecatedAccount2KeyInfoObject = [{
     id: '2ec615522906',
     type: Key.Type.LEGACY,
-    encrypted: true,
     hasPin: false,
+    hasFile: false,
+    hasWords: true,
     legacyAccount: {
         label: Dummy.deprecatedAccountInfos[0].label,
         address: Nimiq.Address.fromUserFriendlyAddress(Dummy.deprecatedAccountInfos[0].userFriendlyAddress).serialize(),
     },
 }];
 
-Dummy.keyInfoCookieEncoded = '0102ec615522906100ef553f34a779';
+Dummy.keyInfoCookieEncoded = '00012ec615522906' + '1010ef553f34a779';
 
 /** @type {string} */
 Dummy.cookie = `k=${Dummy.keyInfoCookieEncoded};accounts=${JSON.stringify(Dummy.deprecatedAccountInfos)};some=thing;`;
@@ -156,7 +184,7 @@ Dummy.Utils = {
     deleteDatabase: async dbName => {
         return new Promise((resolve, reject) => {
             const request = indexedDB.deleteDatabase(dbName);
-            request.onerror = () => reject;
+            request.onerror = reject;
             request.onsuccess = resolve;
             request.onblocked = () => {
                 // wait for open connections to get closed

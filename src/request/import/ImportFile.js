@@ -25,6 +25,8 @@ class ImportFile {
         this._encryptedKey = new Nimiq.SerialBuffer(0);
         this._keyType = Key.Type.BIP39;
         this._hasPin = false;
+        this._hasFile = false;
+        this._hasWords = false;
 
         this.importWordsHandler = new ImportWords(request, this._onRecoveryWordsComplete.bind(this), reject);
 
@@ -76,6 +78,8 @@ class ImportFile {
     }
 
     _onFileImported() {
+        this._hasFile = true;
+        this._hasWords = false;
         this.$importFilePage.classList.add('enter-password');
     }
 
@@ -119,6 +123,9 @@ class ImportFile {
         const result = {
             keyId: key.id,
             keyType: key.type,
+            hasPin: key.hasPin,
+            hasFile: key.hasFile,
+            hasWords: key.hasWords,
             addresses,
         };
 
@@ -158,7 +165,7 @@ class ImportFile {
                 secret = this._encryptedKey;
             }
 
-            const key = new Key(secret, this._keyType, this._hasPin);
+            const key = new Key(secret, this._keyType, this._hasPin, this._hasFile, this._hasWords);
 
             await KeyStore.instance.put(key, encryptionKey || undefined);
 
@@ -181,6 +188,8 @@ class ImportFile {
      */
     _onRecoveryWordsComplete(entropy, keyType) {
         this._hasPin = false;
+        this._hasFile = false;
+        this._hasWords = true;
         this._keyType = keyType;
         this._encryptedKey = entropy;
 

@@ -13,11 +13,15 @@ class Key {
      * @param {Uint8Array} secret
      * @param {Key.Type} [type]
      * @param {boolean} [hasPin]
+     * @param {boolean} [hasFile]
+     * @param {boolean} [hasWords]
      */
-    constructor(secret, type = Key.Type.BIP39, hasPin = false) {
+    constructor(secret, type = Key.Type.BIP39, hasPin = false, hasFile = false, hasWords = false) {
         this._secret = secret;
         this._type = type;
         this._hasPin = hasPin;
+        this._hasFile = hasFile;
+        this._hasWords = hasWords;
     }
 
     /**
@@ -118,6 +122,30 @@ class Key {
     set hasPin(hasPin) {
         /** @type {boolean} */ // Annotation required for Typescript
         this._hasPin = hasPin;
+    }
+
+    /**
+     * @type {boolean}
+     */
+    get hasFile() {
+        return this._hasFile;
+    }
+
+    set hasFile(hasFile) {
+        /** @type {boolean} */ // Annotation required for Typescript
+        this._hasFile = hasFile;
+    }
+
+    /**
+     * @type {boolean}
+     */
+    get hasWords() {
+        return this._hasWords;
+    }
+
+    set hasWords(hasWords) {
+        /** @type {boolean} */ // Annotation required for Typescript
+        this._hasWords = hasWords;
     }
 
     /**

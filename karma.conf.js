@@ -20,7 +20,6 @@ module.exports = function (/** @type {any} */ config) {
             { 'pattern': 'src/assets/Iqons.min.svg', 'watched': false, 'included': false, 'served': true },
         ],
 
-
         // avoid calling runKeyguard
         exclude: [
             'src/request/**/index.js'

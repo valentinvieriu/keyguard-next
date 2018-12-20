@@ -42,6 +42,8 @@ type KeyRecord = {
     type: Key.Type
     encrypted: boolean
     hasPin: boolean
+    hasFile: boolean
+    hasWords: boolean
     secret: Uint8Array
 }
 
