@@ -40,7 +40,7 @@ class Export {
         const $wordsButtonOnFilePage = ($keyfilePage.querySelector('.go-to-words'));
 
         $finishRequestButton.addEventListener('click', () => {
-            this._resolve({ success: true });
+            this._assembleResult({ success: true });
         });
         $wordsButtonOnFilePage.addEventListener('click', () => this._exportWordsHandler.run());
         this.$wordsButton.addEventListener('click', () => this._exportWordsHandler.run());
@@ -58,13 +58,13 @@ class Export {
 
     /**
      *
-     * @param { {success:boolean} } result
+     * @param {{success: boolean}} result
      */
     _fileSucceeded(result) {
+        this.exported.file = result.success;
         if (this.exported.words) {
-            this._resolve(result);
+            this._assembleResult(result);
         } else {
-            this.exported.file = result.success;
             this.$fileButton.classList.add('display-none');
             window.location.hash = Export.Pages.MORE_EXPORT_OPTIONS;
         }
@@ -72,19 +72,30 @@ class Export {
 
     /**
      *
-     * @param { {success:boolean} } result
+     * @param {{success: boolean}} result
      */
     _wordsSucceeded(result) {
-        this._resolve(result);
+        this.exported.words = result.success;
+        this._assembleResult(result);
         /*
         if (this.exported.file) {
-            this._resolve(result);
+            this._assembleResult(result);
         } else {
-            this.exported.words = result.success;
             this.$wordsButton.classList.add('display-none');
             window.location.hash = Export.Pages.MORE_EXPORT_OPTIONS;
         }
 */
+    }
+
+    /**
+     *
+     * @param {{success: boolean}} result
+     */
+    _assembleResult(result) {
+        this._resolve(Object.assign({}, result, {
+            hasFile: this._request.keyInfo.hasFile || this.exported.file,
+            hasWords: this._request.keyInfo.hasWords || this.exported.words,
+        }));
     }
 
     _buildMoreExportOptions() {

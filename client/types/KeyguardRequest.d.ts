@@ -108,12 +108,19 @@ declare namespace KeyguardRequest {
         address: Uint8Array
     }
 
-    type KeyguardRequest = CreateRequest
+    type ExportResult = SimpleResult & {
+        hasFile: boolean
+        hasWords: boolean
+    }
+
+    type KeyguardRequest =
+          CreateRequest
         | ImportRequest
         | SimpleRequest
         | SignTransactionRequest
         | DeriveAddressRequest
         | SignMessageRequest
+        | ExportResult
 
     type KeyguardError = {
         Types: {

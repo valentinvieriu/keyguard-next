@@ -63,11 +63,12 @@ export class KeyguardClient {
     }
 
     public async export(request: KeyguardRequest.SimpleRequest, requestBehavior = this._defaultBehavior)
-        : Promise<KeyguardRequest.SimpleResult> {
+        : Promise<KeyguardRequest.ExportResult> {
         return this._request(requestBehavior,  KeyguardCommand.EXPORT, [request]);
     }
 
     public async changePassphrase(request: KeyguardRequest.SimpleRequest, requestBehavior = this._defaultBehavior)
+        // TODO: Change to return an ExportResult when adding file export after password change
         : Promise<KeyguardRequest.SimpleResult> {
         return this._request(requestBehavior,  KeyguardCommand.CHANGE_PASSPHRASE, [request]);
     }
