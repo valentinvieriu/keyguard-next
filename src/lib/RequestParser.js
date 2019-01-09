@@ -199,7 +199,7 @@ class RequestParser { // eslint-disable-line no-unused-vars
      */
     parseShopLogoUrl(url) {
         if (!url || typeof url !== 'string') {
-            throw new Errors.InvalidRequestError('shopOrigin must be of type string');
+            throw new Errors.InvalidRequestError('shopLogoUrl must be of type string');
         }
         try {
             const parsedUrl = new URL(url);

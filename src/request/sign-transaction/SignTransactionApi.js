@@ -70,9 +70,11 @@ class SignTransactionApi extends TopLevelApi {
         parsedRequest.layout = this.parseLayout(request.layout);
         if (parsedRequest.layout === 'checkout') {
             parsedRequest.shopOrigin = this.parseShopOrigin(request.shopOrigin);
-            parsedRequest.shopLogoUrl = this.parseShopLogoUrl(request.shopLogoUrl);
-            if (parsedRequest.shopLogoUrl.origin !== parsedRequest.shopOrigin) {
-                throw new Errors.InvalidRequestError('origins of shopLogoUrl must be same as referer');
+            if (request.shopLogoUrl) {
+                parsedRequest.shopLogoUrl = this.parseShopLogoUrl(request.shopLogoUrl);
+                if (parsedRequest.shopLogoUrl.origin !== parsedRequest.shopOrigin) {
+                    throw new Errors.InvalidRequestError('origin of shopLogoUrl must be same as referrer');
+                }
             }
         } else {
             parsedRequest.shopOrigin = undefined;
