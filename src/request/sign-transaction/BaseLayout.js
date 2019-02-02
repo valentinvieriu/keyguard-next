@@ -185,7 +185,10 @@ class BaseLayout {
         Nimiq.CryptoWorker.getInstanceAsync();
         /** @type {HTMLElement} */
         (this.$el.parentElement).classList.remove('display-none');
-        this._passphraseBox.focus();
+        const x = window.innerWidth
+                || document.documentElement.clientWidth
+                || document.getElementsByTagName('body')[0].clientWidth;
+        if (x > 600) this._passphraseBox.focus();
     }
 
     /**
