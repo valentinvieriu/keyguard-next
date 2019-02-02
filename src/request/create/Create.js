@@ -62,7 +62,11 @@ class Create {
                 );
                 this.progressIndicator.setStep(2);
                 this._passphraseSetter.reset();
-                this._passphraseSetter.focus();
+                const x = window.innerWidth
+                        || document.documentElement.clientWidth
+                        || document.getElementsByTagName('body')[0].clientWidth;
+                console.log('X', x);
+                if (x > 600) this._passphraseSetter.focus();
             },
         );
 
