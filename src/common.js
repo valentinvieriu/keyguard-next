@@ -61,8 +61,8 @@ async function runKeyguard(RequestApiClass, options) { // eslint-disable-line no
      */
     function allowedOrigin() {
         switch (window.location.origin) {
-        case 'https://keyguard-next.nimiq.com': return 'https://accounts.nimiq.com';
-        case 'https://keyguard-next.nimiq-testnet.com': return 'https://accounts.nimiq-testnet.com';
+        case 'https://keyguard.nimiq.com': return 'https://accounts.nimiq.com';
+        case 'https://keyguard.nimiq-testnet.com': return 'https://accounts.nimiq-testnet.com';
         default: return '*';
         }
     }
