@@ -77,6 +77,10 @@ class PassphraseSetterBox extends Nimiq.Observable {
         this._passphraseInput.focus();
     }
 
+    blur() {
+        this._passphraseInput.blur();
+    }
+
     /**
      * @param {boolean} [isWrongPassphrase]
      */

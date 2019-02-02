@@ -79,6 +79,10 @@ class PassphraseInput extends Nimiq.Observable {
         this.$input.focus();
     }
 
+    blur() {
+        this.$input.blur();
+    }
+
     reset() {
         this.$input.value = '';
         this._changeVisibility(false);

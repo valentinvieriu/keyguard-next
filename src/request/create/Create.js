@@ -68,6 +68,8 @@ class Create {
                 // On desktop, focus input field. On mobile not because of keyboard popping up too early.
                 if (x > 600) {
                     this._passphraseSetter.focus();
+                } else {
+                    this._passphraseSetter.blur();
                 }
             },
         );
