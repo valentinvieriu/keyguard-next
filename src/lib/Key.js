@@ -78,7 +78,7 @@ class Key {
         // Construct buffer
         const data = new Nimiq.SerialBuffer(dataLength);
         data.writeUint8(Key.MSG_PREFIX_LENGTH);
-        data.write(Key.MSG_PREFIX);
+        data.write(new Nimiq.SerialBuffer(Nimiq.BufferUtils.fromAscii(Key.MSG_PREFIX)));
         data.writeUint8(msgLength);
         data.write(msgBytes);
 
@@ -164,5 +164,5 @@ Key.Type = {
     BIP39: 1,
 };
 
-Key.MSG_PREFIX = new Nimiq.SerialBuffer(Nimiq.BufferUtils.fromAscii('Nimiq Signed Message:\n'));
-Key.MSG_PREFIX_LENGTH = Key.MSG_PREFIX.length;
+Key.MSG_PREFIX = 'Nimiq Signed Message:\n';
+Key.MSG_PREFIX_LENGTH = 22;
