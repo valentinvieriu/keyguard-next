@@ -14,7 +14,7 @@ module.exports = function (/** @type {any} */ config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'https://cdn.nimiq-testnet.com/web-offline.js',
+            'https://cdn.nimiq-testnet.com/v1.4.1/web-offline.js',
             'src/**/*js',
             'tests/**/*.spec.js',
             { 'pattern': 'src/assets/Iqons.min.svg', 'watched': false, 'included': false, 'served': true },
